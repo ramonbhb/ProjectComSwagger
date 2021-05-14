@@ -1,0 +1,159 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API de Exemplo de Documentação",
+    "description": "Esta é uma api documentada"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {}
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "ROTA PRINCIPAL"
+        ],
+        "description": "Uma rota que retorna um Hello World",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Mensagem enviada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "mensagem": {
+                  "type": "string",
+                  "example": "Hello World"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "mensagem": {
+                  "type": "string",
+                  "example": "Não Autorizado"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Rota não autorizou o acesso"
+          }
+        }
+      }
+    },
+    "/time/{id}": {
+      "get": {
+        "tags": [
+          "Time"
+        ],
+        "description": "Rota que retorna um time por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "Integer",
+            "description": "Id do Time"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna um time",
+            "schema": {
+              "$ref": "#/definitions/Time"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/time": {
+      "post": {
+        "tags": [
+          "Time"
+        ],
+        "description": "Endpoint para adicionar um time",
+        "parameters": [
+          {
+            "name": "novoTime",
+            "in": "body",
+            "description": "Dados do Time",
+            "required": "True",
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Time"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Criado com sucesso"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Time": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Cruzeirão Cabuloso"
+        },
+        "sede": {
+          "type": "string",
+          "example": "Toca 3"
+        }
+      }
+    },
+    "Pessoa": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "John Snow"
+        },
+        "serie": {
+          "type": "string",
+          "example": "GoT"
+        },
+        "time": {
+          "$ref": "#/definitions/Time"
+        }
+      }
+    }
+  }
+}
